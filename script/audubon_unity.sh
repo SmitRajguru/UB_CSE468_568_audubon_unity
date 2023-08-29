@@ -6,3 +6,5 @@ echo "Audubon Unity Script"
 git clone https://github.com/SmitRajguru/UB_CSE468_568_audubon_unity.git
 cp -R UB_CSE468_568_audubon_unity/* ./
 rm -rf UB_CSE468_568_audubon_unity
+chmod +x script/*
+chmod +x src/*
