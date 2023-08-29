@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+
+<launch>
+
+    <!-- Start the rosbridge server-->
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+
+    <!-- Start the helper nodes-->
+    <node name="audubon_unity_path_publisher" pkg="audubon_unity" type="path_publisher.py" output="screen"/>
+
+    <!-- Start the Unity3D simulation -->
+    <node name="audubon_unity" pkg="audubon_unity" type="audubon_unity.sh" output="screen"/>
+
+</launch>
