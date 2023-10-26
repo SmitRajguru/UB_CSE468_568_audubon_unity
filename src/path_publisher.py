@@ -40,7 +40,7 @@ class Path_Publisher:
 
         self.path.header = msg.header
         self.path.header.seq = self.sequenceId
-        self.path.header.frame_id = "world_frame"
+        self.path.header.frame_id = "world"
         self.path.poses.append(newpose)
 
         self.sequenceId += 1
