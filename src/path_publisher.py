@@ -66,7 +66,7 @@ def main():
 
     rate = rospy.Rate(1)
 
-    while True:
+    while not rospy.is_shutdown():
         # get all topics
         topics = dict(rospy.get_published_topics())
 
