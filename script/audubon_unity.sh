@@ -2,7 +2,8 @@
 
 echo "Audubon Unity Script"
 
-# download the latest audubon unity package
+
+# source needed files for ros and catkin workspace
 source /opt/ros/noetic/setup.bash
 
 # check if the catkin_ws folder exists
@@ -18,6 +19,7 @@ else
     source /home/cse4568/catkin_ws/devel/setup.bash
 fi
 
+# download the latest audubon unity package
 roscd audubon_unity
 echo "Running in $(pwd)"
 git clone https://github.com/SmitRajguru/UB_CSE468_568_audubon_unity.git
