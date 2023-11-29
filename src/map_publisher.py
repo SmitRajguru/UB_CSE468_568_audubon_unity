@@ -56,8 +56,8 @@ class MapServer:
         )
 
         # publish map to topic temp_map until map saver is ready
-        print("Map Publiser - publishing map till map saver is ready")
         while self.mapSaver.poll() is None:
+            print("Map Publiser - publishing map")
             self.mapPub.publish(self.map)
             time.sleep(1)
 
