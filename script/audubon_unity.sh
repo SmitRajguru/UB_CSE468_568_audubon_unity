@@ -11,11 +11,9 @@ if [ ! -d "/home/cse4568/catkin_ws" ]; then
     # check if the catkin_noetic folder exists
     if [ ! -d "/mnt/c/catkin_noetic" ]; then
         echo "catkin_ws does not exist"
-    fi
     else
         source /mnt/c/catkin_noetic/devel/setup.bash
     fi
-fi
 else
     source /home/cse4568/catkin_ws/devel/setup.bash
 fi
