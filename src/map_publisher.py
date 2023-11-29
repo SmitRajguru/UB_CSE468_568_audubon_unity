@@ -54,11 +54,12 @@ class MapServer:
             "rosrun map_server map_saver -f temp_map map:=/temp_map",
             shell=True,
         )
-        time.sleep(1)
-        self.mapPub.publish(self.map)
 
-        # wait for map_server to finish saving map
-        self.mapSaver.wait()
+        # publish map to topic temp_map until map server is ready
+        print("Map Publiser - publishing map till map server is ready")
+        while self.mapServer.poll() is None:
+            self.mapPub.publish(self.map)
+            time.sleep(1)
 
         # load map from file using map_server
         if self.mapServer is not None:
