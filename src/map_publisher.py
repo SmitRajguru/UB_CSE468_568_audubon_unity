@@ -29,13 +29,13 @@ class MapServer:
             print("Map Publiser - loading map from file")
             runCommand = ""
             # check if catkin_ws exists in home directory
-            if not os.path.exists("~/catkin_ws"):
+            if not os.path.exists("/home/cse4568/catkin_ws"):
                 if os.path.exists("/mnt/c/catkin_noetic"):
                     runCommand += "source /mnt/c/catkin_noetic/devel/setup.bash; "
                 else:
                     print("Map Publiser - catkin_ws not found")
             else:
-                runCommand += "source ~/catkin_ws/devel/setup.bash; "
+                runCommand += "source /home/cse4568/catkin_ws/devel/setup.bash; "
 
             runCommand += "roscd audubon_unity/maps; "
 
