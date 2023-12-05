@@ -23,7 +23,10 @@ fi
 roscd audubon_unity
 echo "Running in $(pwd)"
 git clone https://github.com/SmitRajguru/UB_CSE468_568_audubon_unity.git
-cp -R UB_CSE468_568_audubon_unity/* ./
+if [ ! -f "config/map.yaml" ]; then
+    cp UB_CSE468_568_audubon_unity/config/map.yaml ./config/map.yaml
+fi
+rsync -av --exclude='map.yaml' UB_CSE468_568_audubon_unity/* ./
 rm -rf UB_CSE468_568_audubon_unity
 chmod +x script/*
 chmod +x src/*
