@@ -8,6 +8,9 @@
     <!-- Start the rosbridge server-->
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
 
+    <!-- Load yaml files-->
+    <rosparam command="load" file="$(find audubon_unity)/config/map.yaml"/>
+
     <!-- Start the helper nodes-->
     <node name="audubon_unity_path_publisher" pkg="audubon_unity" type="path_publisher.py" output="screen"/>
     <node name="audubon_unity_map_publisher" pkg="audubon_unity" type="map_publisher.py" output="screen"/>

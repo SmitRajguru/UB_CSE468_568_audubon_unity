@@ -13,6 +13,10 @@ class MapServer:
         # initialize node
         rospy.init_node("map_server_node", anonymous=True)
 
+        # load map params from json
+        self.isMac = rospy.get_param("isMac")
+        self.mapFile = rospy.get_param("mapFile")
+
         # initialize variables
         self.map = None
         self.mapSaver = None
@@ -20,9 +24,32 @@ class MapServer:
 
         rospy.on_shutdown(self.shutdown)
 
-        # initialize subscriber
-        self.mapPub = rospy.Publisher("/temp_map", OccupancyGrid, queue_size=1)
-        self.mapSub = rospy.Subscriber("/unity_map", OccupancyGrid, self.mapCallback)
+        if self.isMac:
+            # load from mapfile
+            print("Map Publiser - loading map from file")
+            runCommand = ""
+            # check if catkin_ws exists in home directory
+            if not os.path.exists("~/catkin_ws"):
+                if os.path.exists("/mnt/c/catkin_noetic"):
+                    runCommand += "source /mnt/c/catkin_noetic/devel/setup.bash; "
+                else:
+                    print("Map Publiser - catkin_ws not found")
+            else:
+                runCommand += "source ~/catkin_ws/devel/setup.bash; "
+
+            runCommand += "roscd audubon_unity/maps; "
+
+            runCommand += f"rosrun map_server map_server {self.mapFile}.yaml "
+            self.mapServer = subprocess.Popen(
+                runCommand, shell=True, executable="/bin/bash"
+            )
+
+        else:
+            # initialize subscriber
+            self.mapPub = rospy.Publisher("/temp_map", OccupancyGrid, queue_size=1)
+            self.mapSub = rospy.Subscriber(
+                "/unity_map", OccupancyGrid, self.mapCallback
+            )
 
     def run(self):
         rate = rospy.Rate(10)
@@ -37,10 +64,11 @@ class MapServer:
             print("Map Publiser - killing map server")
             self.mapServer.kill()
 
-        # remove temp map files
-        print("Map Publiser - removing temp map files")
-        deleter = subprocess.Popen("rm temp_map*", shell=True)
-        deleter.wait()
+        if not self.isMac:
+            # remove temp map files
+            print("Map Publiser - removing temp map files")
+            deleter = subprocess.Popen("rm temp_map*", shell=True)
+            deleter.wait()
 
         print("Map Publiser - shutdown complete")
 
