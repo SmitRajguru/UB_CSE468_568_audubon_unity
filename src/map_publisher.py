@@ -14,7 +14,7 @@ class MapServer:
         rospy.init_node("map_server_node", anonymous=True)
 
         # load map params from json
-        self.isMac = rospy.get_param("isMac")
+        self.isLocalMap = rospy.get_param("isLocalMap")
         self.mapFile = rospy.get_param("mapFile")
 
         # initialize variables
@@ -24,7 +24,7 @@ class MapServer:
 
         rospy.on_shutdown(self.shutdown)
 
-        if self.isMac:
+        if self.isLocalMap:
             # load from mapfile
             print("Map Publiser - loading map from file")
             runCommand = ""
@@ -64,7 +64,7 @@ class MapServer:
             print("Map Publiser - killing map server")
             self.mapServer.kill()
 
-        if not self.isMac:
+        if not self.isLocalMap:
             # remove temp map files
             print("Map Publiser - removing temp map files")
             deleter = subprocess.Popen("rm temp_map*", shell=True)
