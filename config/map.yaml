@@ -1,5 +1,5 @@
 # Map Parameters
-isMac: False
+isLocalMap: False
 mapFile: "BoxedPlayground"
 # mapFile: "StaticPlayground"
 # mapFile: "IROS23"
